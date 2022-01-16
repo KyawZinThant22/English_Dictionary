@@ -16,7 +16,7 @@ body{
 }
 
 .wrapper{
-    width: 480px;
+    width: 420px;
     background: #fff;
     border-radius: 7px;
     padding: 25px 28px 45px;
@@ -127,6 +127,15 @@ ul li:last-child{
     
 }
 
+ul .content{
+    max-height: 215px;
+    overflow-y: auto;
+}
+
+ul .content::-webkit-scrollbar{
+    width: 0px;
+  }
+
 ul .word p{
     font-size: 22px;
     font-weight: 500;
@@ -170,3 +179,10 @@ ul .word i{
     text-decoration: underline;
     cursor: pointer;
 }
+
+@media  screen and (min-width: 380px) {
+    .wrapper {
+      width: 380px;
+      margin: 0 20px;
+    }
+  }

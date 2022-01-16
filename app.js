@@ -1,6 +1,10 @@
 const wrapper = document.querySelector(".wrapper"),
-searchInput = wrapper.querySelector("input");
-infoText = wrapper.querySelector(".info-text");
+searchInput = wrapper.querySelector("input"),
+synonyms = wrapper.querySelector(".synonyms .list"),
+infoText = wrapper.querySelector(".info-text"),
+volumeIcon = wrapper.querySelector(".word i");
+
+let audio;
 
 
 //data function 
@@ -11,12 +15,28 @@ function data(result,word){
         console.log(result);
         wrapper.classList.add("active");
         let definitions = result[0].meanings[0].definitions[0]
+        phontetics = `${result[0].meanings[0].partOfSpeech}  /${result[0].phonetics[0].text}/`;
 
 
         //pass the particular element to the ui
         document.querySelector(".word p").innerText =  result[0].word;
+        document.querySelector(".word span").innerText = phontetics;
         document.querySelector(".meaning span").innerText =definitions.definition;
+        document.querySelector(".example span").innerText =definitions.example;
+        audio = new Audio("https:" + result[0].phonetics[0].audio);
 
+
+        if(definitions.synonyms[0] == undefined){
+            synonyms.parentElement.style.display = 'none';
+        }else{
+
+            synonyms.parentElement.style.display = 'block';
+            synonyms.innerHTML = '';
+            for ( let i = 0 ; i < 5 ; i++){         
+                let tag =` <span>${definitions.synonyms[i]},</span>`;
+                synonyms.insertAdjacentHTML("beforeend",tag)
+            }
+        }
 
     }
 }
@@ -36,6 +56,11 @@ searchInput.addEventListener("keyup",(e) =>{
         fetchApi(e.target.value);
     }
 });
+
+
+volumeIcon.addEventListener('click',()=>{
+    audio.play();
+})
 
 
 
